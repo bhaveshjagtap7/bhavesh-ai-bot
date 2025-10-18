@@ -6,56 +6,68 @@
     <title>Bhavesh GPT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles for gradient background and effects */
-        .gradient-bg {
-            background: linear-gradient(135deg, #2a004a, #4b0082);
+        /* Custom styles for premium UI */
+        .premium-bg {
+            background: linear-gradient(135deg, #0a0e1f, #1a2a44);
             height: 100vh;
             background-size: cover;
         }
-        .chat-container {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        .premium-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(100, 149, 237, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .metallic-border {
+            border: 1px solid rgba(192, 192, 192, 0.5);
+            border-radius: 10px;
         }
         .message-bubble {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            background: rgba(47, 79, 79, 0.2);
+            border-radius: 10px;
             backdrop-filter: blur(5px);
-            max-width: 70%;
+            max-width: 75%;
         }
         .input-glow {
             transition: box-shadow 0.3s ease;
         }
         .input-glow:focus {
-            box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
         }
         .fade-in {
             animation: fadeIn 0.5s ease-in;
+        }
+        .hover-shine {
+            transition: transform 0.3s ease;
+        }
+        .hover-shine:hover {
+            transform: scale(1.05);
         }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
         .message-space {
-            margin: 10px 0; /* Increased spacing between messages */
+            margin: 12px 0; /* Increased spacing for premium feel */
         }
     </style>
 </head>
-<body class="gradient-bg text-white flex items-center justify-center p-4">
-    <div class="chat-container w-full max-w-md p-6">
+<body class="premium-bg text-white flex items-center justify-center p-4">
+    <div class="premium-container w-full max-w-md p-6">
         <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-purple-300 fade-in">Bhavesh GPT</h1>
-            <p class="text-sm text-teal-200 fade-in">Advanced AI Assistant</p>
-            <p class="text-green-400 text-xs mt-1 fade-in">Online</p>
+            <h1 class="text-3xl font-extrabold text-gray-200 fade-in">Bhavesh GPT</h1>
+            <p class="text-sm text-blue-300 fade-in">Premium AI Assistant</p>
+            <p class="text-green-400 text-xs mt-1 fade-in">Online - 05:03 PM IST, Oct 18, 2025</p>
         </div>
-        <div class="chat-box h-96 overflow-y-auto mb-6 p-4 space-y-6"> <!-- Increased space-y-6 for more spacing -->
+        <div class="chat-box h-96 overflow-y-auto mb-6 p-4 space-y-6 metallic-border">
             <div id="messages"></div>
         </div>
-        <div class="flex space-x-2">
-            <input id="userInput" type="text" class="flex-1 p-2 rounded-lg bg-gray-800 text-white border border-teal-400 input-glow focus:outline-none" placeholder="Type your message here...">
-            <button id="sendBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-300">Send</button>
+        <div class="flex space-x-3">
+            <input id="userInput" type="text" class="flex-1 p-3 rounded-lg bg-gray-800 text-white border border-gray-400 input-glow focus:outline-none" placeholder="Type your message...">
+            <button id="sendBtn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg metallic-border hover-shine">Send</button>
         </div>
-        <div class="text-xs text-gray-400 mt-2 text-center">
+        <div class="text-xs text-gray-500 mt-2 text-center">
             <p>Press Enter to send • Open console (F12) for errors • Use a local server or Chrome with --disable-web-security for CORS</p>
         </div>
     </div>
@@ -75,7 +87,7 @@
         function addWelcomeMessage() {
             const welcomeMsg = document.createElement('div');
             welcomeMsg.className = 'message-bubble p-3 text-gray-300 fade-in message-space';
-            welcomeMsg.innerHTML = 'Hello! I\'m BHAVESH GPT, your intelligent AI assistant. How can I help you today?';
+            welcomeMsg.innerHTML = 'Welcome! I\'m Bhavesh GPT, your premium AI assistant. How can I assist you today?';
             messagesDiv.appendChild(welcomeMsg);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
@@ -86,7 +98,7 @@
             if (!input) return;
 
             const userMessage = document.createElement('div');
-            userMessage.className = 'message-bubble p-3 text-teal-200 fade-in message-space text-right';
+            userMessage.className = 'message-bubble p-3 text-blue-200 fade-in message-space text-right';
             userMessage.textContent = input;
             messagesDiv.appendChild(userMessage);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -96,7 +108,7 @@
 
             let statusDiv = document.createElement('div');
             statusDiv.className = 'text-center text-yellow-200 text-xs fade-in message-space';
-            statusDiv.textContent = 'Bhavesh GPT is thinking...';
+            statusDiv.textContent = 'Bhavesh GPT is processing...';
             messagesDiv.appendChild(statusDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
