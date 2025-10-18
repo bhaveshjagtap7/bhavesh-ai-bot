@@ -3,252 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> BHAVESH GPT - AI Chatbot</title>
+    <title>Bhavesh GPT</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for gradient background and effects */
+        .gradient-bg {
+            background: linear-gradient(135deg, #2a004a, #4b0082);
+            height: 100vh;
+            background-size: cover;
+        }
+        .chat-container {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+        .message-bubble {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            max-width: 70%;
+        }
+        .input-glow {
+            transition: box-shadow 0.3s ease;
+        }
+        .input-glow:focus {
+            box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .message-space {
+            margin: 10px 0; /* Increased spacing between messages */
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="container mx-auto max-w-4xl w-full">
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-                BHAVESH GPT
-            </h1>
-            <p class="text-xl text-gray-300 font-light">Advanced AI Assistant</p>
-            <div class="flex items-center justify-center mt-4 space-x-2">
-                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                <span class="text-green-400 text-sm font-medium">Online</span>
-            </div>
+<body class="gradient-bg text-white flex items-center justify-center p-4">
+    <div class="chat-container w-full max-w-md p-6">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-purple-300 fade-in">Bhavesh GPT</h1>
+            <p class="text-sm text-teal-200 fade-in">Advanced AI Assistant</p>
+            <p class="text-green-400 text-xs mt-1 fade-in">Online</p>
         </div>
-
-        <!-- Chat Container -->
-        <div class="bg-gray-800/50 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-700/50 overflow-hidden">
-            <!-- Status Bar -->
-            <div id="status" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 text-sm font-medium hidden">
-                <i class="fas fa-brain mr-2"></i><span id="status-text">Thinking...</span>
-            </div>
-
-            <!-- Messages Area -->
-            <div class="chat-box p-6 h-96 overflow-y-auto bg-gradient-to-b from-gray-800/30 to-gray-900/30">
-                <div id="messages" class="space-y-4">
-                    <!-- Welcome Message -->
-                    <div class="flex items-start space-x-3 animate-fade-in">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fas fa-robot text-white text-lg"></i>
-                        </div>
-                        <div class="bg-gray-700/50 backdrop-blur-sm rounded-2xl rounded-tl-md p-4 max-w-xs shadow-lg">
-                            <p class="text-gray-100">Hello! I'm BHAVESH GPT, your intelligent AI assistant. How can I help you today?</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Input Area -->
-            <div class="p-6 bg-gray-800/30 border-t border-gray-700/50">
-                <div class="flex space-x-4 items-end">
-                    <div class="flex-1 relative">
-                        <input id="userInput" type="text"
-                               class="w-full p-4 pr-12 rounded-2xl bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                               placeholder="Type your message here...">
-                        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-400 transition-colors">
-                            <i class="fas fa-paper-plane text-lg"></i>
-                        </button>
-                    </div>
-                    <button id="sendBtn"
-                            class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                        <i class="fas fa-paper-plane mr-2"></i>Send
-                    </button>
-                </div>
-
-                <!-- Help Text -->
-                <div class="text-center mt-4">
-                    <p class="text-sm text-gray-400">
-                        <i class="fas fa-info-circle mr-1"></i>
-                        Press Enter to send • Open console (F12) for errors
-                    </p>
-                </div>
-            </div>
+        <div class="chat-box h-96 overflow-y-auto mb-6 p-4 space-y-6"> <!-- Increased space-y-6 for more spacing -->
+            <div id="messages"></div>
         </div>
-
-        <!-- Footer -->
-        <div class="text-center mt-6">
-            <p class="text-gray-400 text-sm">
-                Powered by <span class="text-blue-400 font-semibold">Google Gemini AI</span> •
-                <span class="text-purple-400">Made with </span>
-            </p>
+        <div class="flex space-x-2">
+            <input id="userInput" type="text" class="flex-1 p-2 rounded-lg bg-gray-800 text-white border border-teal-400 input-glow focus:outline-none" placeholder="Type your message here...">
+            <button id="sendBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-300">Send</button>
+        </div>
+        <div class="text-xs text-gray-400 mt-2 text-center">
+            <p>Press Enter to send • Open console (F12) for errors • Use a local server or Chrome with --disable-web-security for CORS</p>
         </div>
     </div>
 
     <script>
-        //  SECURITY WARNING: API key is exposed in frontend
-        // For production, use a backend proxy instead
-        const API_KEY = 'AIzaSyBBPSZEvM_E82GWCb2ZLhPcpedcPDv5_7c';
-
-        // Try multiple models in order of preference
-        const MODELS = ['gemini-pro', 'gemini-1.0-pro', 'gemini-1.5-flash'];
-        let currentModelIndex = 0;
-        let demoMode = false; // Enable demo mode if API fails
-
-        function getCurrentModel() {
-            return MODELS[currentModelIndex] || 'gemini-pro';
-        }
-
-        function getAPIUrl() {
-            return `https://generativelanguage.googleapis.com/v1beta/models/${getCurrentModel()}:generateContent`;
-        }
+        const API_KEY = 'AIzaSyA33GrORogIzMQPbzkWF7nzcW2j-xSrwRI';
+        const MODEL = 'gemini-2.5-flash';
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
         let chatHistory = [];
 
         const messagesDiv = document.getElementById('messages');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
-        const statusDiv = document.getElementById('status');
-        const statusText = document.getElementById('status-text');
+
+        // Initial welcome message
+        function addWelcomeMessage() {
+            const welcomeMsg = document.createElement('div');
+            welcomeMsg.className = 'message-bubble p-3 text-gray-300 fade-in message-space';
+            welcomeMsg.innerHTML = 'Hello! I\'m BHAVESH GPT, your intelligent AI assistant. How can I help you today?';
+            messagesDiv.appendChild(welcomeMsg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        addWelcomeMessage();
 
         async function sendMessage() {
             const input = userInput.value.trim();
             if (!input) return;
 
-            // Add user message
             const userMessage = document.createElement('div');
-            userMessage.className = 'flex items-start justify-end space-x-3 animate-fade-in';
-            userMessage.innerHTML = `
-                <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl rounded-tr-md p-4 max-w-xs shadow-lg">
-                    <p class="text-white">${input}</p>
-                </div>
-                <div class="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-700 rounded-full flex items-center justify-center shadow-lg">
-                    <i class="fas fa-user text-white text-lg"></i>
-                </div>
-            `;
+            userMessage.className = 'message-bubble p-3 text-teal-200 fade-in message-space text-right';
+            userMessage.textContent = input;
             messagesDiv.appendChild(userMessage);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
             chatHistory.push({ role: 'user', parts: [{ text: input }] });
             userInput.value = '';
 
-            showStatus('🤖 BHAVESH GPT is thinking...');
+            let statusDiv = document.createElement('div');
+            statusDiv.className = 'text-center text-yellow-200 text-xs fade-in message-space';
+            statusDiv.textContent = 'Bhavesh GPT is thinking...';
+            messagesDiv.appendChild(statusDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
-            let success = false;
-            let lastError = '';
+            try {
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: chatHistory,
+                        generationConfig: {
+                            temperature: 0.7,
+                            topP: 0.9,
+                            maxOutputTokens: 512
+                        }
+                    })
+                });
 
-            // Try different models if the current one fails
-            for (let attempt = 0; attempt < MODELS.length && !success; attempt++) {
-                currentModelIndex = attempt;
-                const currentModel = getCurrentModel();
-                const currentAPIUrl = getAPIUrl();
-
-                try {
-                    console.log(`Trying model: ${currentModel}`);
-
-                    const response = await fetch(`${currentAPIUrl}?key=${API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: chatHistory })
-                    });
-
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`);
-                    }
-
-                    const data = await response.json();
-
-                    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts[0]) {
-                        throw new Error('Invalid response structure from API');
-                    }
-
-                    const aiText = data.candidates[0].content.parts[0].text;
-
-                    // Add to history
-                    chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
-
-                    // Add AI message
-                    const aiMessage = document.createElement('div');
-                    aiMessage.className = 'flex items-start space-x-3 animate-fade-in';
-                    aiMessage.innerHTML = `
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fas fa-robot text-white text-lg"></i>
-                        </div>
-                        <div class="bg-gray-700/50 backdrop-blur-sm rounded-2xl rounded-tl-md p-4 max-w-xs shadow-lg">
-                            <p class="text-gray-100">${aiText.replace(/\n/g, '<br>')}</p>
-                        </div>
-                    `;
-                    messagesDiv.appendChild(aiMessage);
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-                    success = true;
-                    console.log(`✅ Successfully used model: ${currentModel}`);
-
-                } catch (error) {
-                    console.error(`❌ Model ${currentModel} failed:`, error.message);
-                    lastError = error.message;
-
-                    if (attempt === MODELS.length - 1) {
-                        // Last attempt failed, enable demo mode
-                        demoMode = true;
-                        console.log('🔄 Switching to demo mode');
-
-                        // Generate demo response
-                        const demoResponses = [
-                            `🤖 DEMO MODE: I received your message: "${input}". This is a demo response since the API isn't available. To get real AI responses, please enable the Generative Language API in your Google Cloud project.`,
-                            `🎭 DEMO RESPONSE: Your message was: "${input}". The Gemini API isn't accessible with your current key. Please visit https://makersuite.google.com/app/apikey to get a proper API key.`,
-                            `✨ DEMO MODE ACTIVE: I understand you said "${input}". For real AI conversations, you need to enable the Generative Language API in Google Cloud Console.`
-                        ];
-
-                        const randomDemoResponse = demoResponses[Math.floor(Math.random() * demoResponses.length)];
-
-                        // Add demo response to UI
-                        const aiMessage = document.createElement('div');
-                        aiMessage.className = 'flex items-start space-x-3 animate-fade-in';
-                        aiMessage.innerHTML = `
-                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                                <i class="fas fa-flask text-white text-lg"></i>
-                            </div>
-                            <div class="bg-green-900/30 backdrop-blur-sm rounded-2xl rounded-tl-md p-4 max-w-sm shadow-lg border border-green-500/30">
-                                <p class="text-green-100">${randomDemoResponse}</p>
-                                <div class="mt-2 text-xs text-green-300">
-                                    <i class="fas fa-info-circle mr-1"></i>Demo Mode - Enable Gemini API for real responses
-                                </div>
-                            </div>
-                        `;
-                        messagesDiv.appendChild(aiMessage);
-                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-                        success = true; // Mark as successful for demo mode
-                    }
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
                 }
+
+                const data = await response.json();
+
+                if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                    throw new Error('Invalid response from API');
+                }
+
+                const aiText = data.candidates[0].content.parts[0].text;
+
+                chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
+
+                messagesDiv.removeChild(statusDiv);
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message-bubble p-3 text-gray-300 fade-in message-space';
+                aiMessage.innerHTML = formatMessage(aiText);
+                messagesDiv.appendChild(aiMessage);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            } catch (error) {
+                console.error('API Error:', error);
+                messagesDiv.removeChild(statusDiv);
+                const errorMsg = `Error: ${error.message}. Check console (F12). Try: Verify API key at https://aistudio.google.com/app/apikey, enable Generative Language API in Google Cloud Console, or fix CORS (use local server or proxy).`;
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message-bubble p-3 text-red-400 fade-in message-space';
+                errorDiv.textContent = errorMsg;
+                messagesDiv.appendChild(errorDiv);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
             }
-
-            hideStatus();
         }
 
-        function showStatus(msg) {
-            statusText.textContent = msg;
-            statusDiv.classList.remove('hidden');
-        }
-
-        function hideStatus() {
-            statusDiv.classList.add('hidden');
+        function formatMessage(text) {
+            return text
+                .replace(/\n/g, '<br>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');
         }
 
         sendBtn.addEventListener('click', sendMessage);
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
-
-        // Focus on input when page loads
-        userInput.focus();
-
-        // Animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fade-in {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fade-in { animation: fade-in 0.6s ease-out; }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
