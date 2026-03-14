@@ -64,7 +64,7 @@ def ask():
         return jsonify({"reply": "❌ ERROR: No Gemini models available. Please check your Google API access and billing."})
 
     try:
-        # Generate response using Google's Gemini
+        
         response = model.generate_content(user_input)
         reply = response.text.strip()
 
@@ -82,7 +82,7 @@ def ask():
         elif "quota" in error_msg.lower() or "limit" in error_msg.lower():
             return jsonify({"reply": "❌ ERROR: Google API quota exceeded. Please check your billing or usage limits."})
         elif "model" in error_msg.lower() or "not found" in error_msg.lower():
-            # Fallback: Provide a mock response for testing
+            
             mock_responses = [
                 "I'm currently using a demo mode since the Gemini API isn't available. Your message was: " + user_input,
                 "This is a test response. To get real AI responses, please get a proper Gemini API key from Google AI Studio.",
