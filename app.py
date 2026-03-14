@@ -4,10 +4,10 @@ import google.generativeai as genai
 
 app = Flask(__name__)
 
-# Load Google API key from environment variable
+
 google_api_key = os.getenv('GOOGLE_API_KEY')
 
-# If not found in environment, try reading directly from .env file
+
 if not google_api_key:
     try:
         env_file = os.path.join(os.getcwd(), '.env')
@@ -20,10 +20,10 @@ if not google_api_key:
     except Exception as e:
         print(f"Error reading .env file: {e}")
 
-# Configure Google's Generative AI
+
 if google_api_key:
     genai.configure(api_key=google_api_key)
-    # Try different model names in order of preference
+   
     model_names = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro', 'gemini-1.0-pro']
     model = None
 
